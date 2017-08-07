@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1=title
+
+  ul
+  each medical_facility in medical_facility_list
+    li
+      a(href=medical_facility.url) #{medical_facility.name}
+  else
+    li There are no medical facilities.

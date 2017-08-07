@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1=title
+
+  ul
+  each symptom in symptom_list
+    li
+      a(href=symptom.url) #{symptom.symptom}
+  else
+    li There are no symptoms.

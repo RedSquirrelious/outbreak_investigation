@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1=title
+
+  ul
+  each germ in germ_list
+    li
+      a(href=germ.url) #{germ.full_name}
+  else
+    li There are no germs.

@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1=title
+
+  ul
+  each lab in lab_list
+    li
+      a(href=lab.url) #{lab.name}
+  else
+    li There are no labs.

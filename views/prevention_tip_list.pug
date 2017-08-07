@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1=title
+
+  ul
+  each tip in prevention_tip_list
+    li
+      a(href=tip.url) #{tip.recommendation}
+  else
+    li There are no prevention tips.
