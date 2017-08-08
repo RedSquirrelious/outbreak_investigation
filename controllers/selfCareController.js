@@ -12,7 +12,16 @@ exports.self_care_list = function(req, res) {
 };
 
 exports.self_care_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: self_care detail GET');
+  async.parallel({
+    recommendation: function(callback) {
+      SelfCare.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('recommendation_detail', {title: 'Care Recommendation', recommendation: results.recommendation});
+  });
 };
 
 exports.self_care_create_get = function(req, res) {

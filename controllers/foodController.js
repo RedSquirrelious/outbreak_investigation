@@ -12,8 +12,17 @@ exports.food_list = function(req, res) {
     })
 };
 
-exports.food_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: food detail GET');
+exports.food_detail = function(req, res, next) {
+  async.parallel({
+    food: function(callback) {
+      Food.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('food_detail', {title: 'Food Detail', food: results.food});
+  });
 };
 
 exports.food_create_get = function(req, res) {

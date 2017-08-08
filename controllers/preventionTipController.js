@@ -12,7 +12,16 @@ exports.prevention_tip_list = function(req, res) {
 };
 
 exports.prevention_tip_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: prevention_tip detail GET');
+  async.parallel({
+    tip: function(callback) {
+      PreventionTip.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('prevention_tip_detail', {title: 'Tip Detail', tip: results.tip});
+  });
 };
 
 exports.prevention_tip_create_get = function(req, res) {

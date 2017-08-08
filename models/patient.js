@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
+var pnf = require('google-libphonenumber').PhoneNumberFormat;
+var phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 
 var Schema = mongoose.Schema;
 
@@ -41,6 +43,42 @@ PatientSchema
 .virtual('name')
 .get(function() {
   return this.first_name + ' ' + this.family_name;
+});
+
+PatientSchema
+.virtual('hm_phone')
+.get(function() {
+  var formatted_number = '';
+  if (this.work_phone)
+  {
+    var numProto = phoneUtil.parse(this.home_phone, 'US');
+    formatted_number = phoneUtil.format(numProto, pnf.NATIONAL);
+  }
+  return formatted_number;
+});
+
+PatientSchema
+.virtual('wk_phone')
+.get(function() {
+  var formatted_number = '';
+  if (this.work_phone)
+  {
+    var numProto = phoneUtil.parse(this.work_phone, 'US');
+    formatted_number = phoneUtil.format(numProto, pnf.NATIONAL);
+  }
+  return formatted_number;
+});
+
+PatientSchema
+.virtual('cell')
+.get(function() {
+  var formatted_number = '';
+  if (this.work_phone)
+  {
+    var numProto = phoneUtil.parse(this.cell_phone, 'US');
+    formatted_number = phoneUtil.format(numProto, pnf.NATIONAL);
+  }
+  return formatted_number;
 });
 
 module.exports = mongoose.model('Patient', PatientSchema);

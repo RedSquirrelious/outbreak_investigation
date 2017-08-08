@@ -1,0 +1,16 @@
+extend layout
+
+block content
+
+  h1 #{vendor.name}
+
+  h3 Category
+  p #{vendor.vendor_type}
+
+  h3 Address
+  p #{vendor.street_address}
+  p #{vendor.city}, #{vendor.state} #{vendor.zip}
+
+  h3 Point of Contact: 
+  p #{vendor.poc_name}
+  p #{vendor.phone}

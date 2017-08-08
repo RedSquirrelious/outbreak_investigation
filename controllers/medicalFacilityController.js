@@ -15,7 +15,16 @@ exports.medical_facility_list = function(req, res) {
 };
 
 exports.medical_facility_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: medical_facility detail GET');
+  async.parallel({
+    facility: function(callback) {
+      MedicalFacility.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('medical_facility_detail', {title: 'Facility Detail', facility: results.facility});
+  })
 };
 
 exports.medical_facility_create_get = function(req, res) {

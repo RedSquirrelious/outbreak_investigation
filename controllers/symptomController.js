@@ -12,7 +12,16 @@ exports.symptom_list = function(req, res) {
 };
 
 exports.symptom_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: symptom detail GET');
+  async.parallel({
+    symptom: function(callback) {
+      Symptom.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('symptom_detail', {title: 'Symptom Detail', symptom: results.symptom});
+  });
 };
 
 exports.symptom_create_get = function(req, res) {

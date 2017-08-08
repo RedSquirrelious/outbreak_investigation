@@ -1,0 +1,21 @@
+extend layout
+
+block content
+
+  h1 #{germ.full_name}
+
+  h4 Symptoms
+  ul 
+    each symptom in germ.symptoms
+      li 
+        a(href=symptom.url) #{symptom.symptom}
+    else 
+      p This germ has no symptoms.
+
+  h4 Prevention Tips
+  ul
+  each tip in germ.prevention
+    li 
+      a(href=tip.url) #{tip.recommendation}
+  else 
+    p There is no stopping this germ.

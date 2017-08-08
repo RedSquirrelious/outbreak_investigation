@@ -12,7 +12,16 @@ exports.vendor_list = function(req, res) {
 };
 
 exports.vendor_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: vendor detail GET');
+  async.parallel({
+    vendor: function(callback) {
+      Vendor.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('vendor_detail', {title: 'Vendor Detail', vendor: results.vendor});
+  });
 };
 
 exports.vendor_create_get = function(req, res) {

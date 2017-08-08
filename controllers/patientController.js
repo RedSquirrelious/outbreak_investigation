@@ -13,7 +13,16 @@ exports.patient_list = function(req, res) {
 };
 
 exports.patient_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: patient detail GET');
+  async.parallel({
+    patient: function(callback) {
+      Patient.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('patient_detail', {title: 'Patient Detail', patient: results.patient});
+  });
 };
 
 exports.patient_create_get = function(req, res) {

@@ -15,7 +15,17 @@ exports.lab_list = function(req, res) {
 };
 
 exports.lab_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: lab detail GET');
+  async.parallel({
+    lab: function(callback) {
+      Lab.findById(req.params.id)
+      .exec(callback);
+    }
+  },
+
+  function(err, results) {
+    if (err) {return next(err);}
+    res.render('lab_detail', {title: 'Lab Detail', lab: results.lab});
+  });
 };
 
 exports.lab_create_get = function(req, res) {

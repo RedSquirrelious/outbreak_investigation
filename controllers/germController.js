@@ -16,7 +16,19 @@ exports.germ_list = function(req, res) {
 };
 
 exports.germ_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: germ detail GET');
+  async.parallel({
+    germ: function(callback) {
+      Germ.findById(req.params.id)
+      .populate('symptoms')
+      .populate('self_care')
+      .populate('prevention')
+      .exec(callback);
+    }
+  },
+    function(err, results) {
+      if (err) {return next(err);}
+      res.render('germ_detail', {title: 'Germ Detail', germ: results.germ});
+  });
 };
 
 exports.germ_create_get = function(req, res) {
