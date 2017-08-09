@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 
 var FoodSchema = Schema({
   name: {type: String, required: true},
-  type: {type: String, required: true},
+  type
+  : {type: String, required: true},
   preparation: {type: String, required: true},
 });
 

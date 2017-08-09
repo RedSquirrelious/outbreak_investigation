@@ -3,15 +3,15 @@ var moment = require('moment');
 
 var Schema = mongoose.Schema;
 
-var SelfCareSchema = Schema({
+var HomeCareTipSchema = Schema({
   recommendation: {type: String, required: true},
 });
 
-SelfCareSchema
+HomeCareTipSchema
 .virtual('url')
 .get(function() {
-  return '/casebook/recommendation/' + this._id;
+  return '/casebook/home_care_tip/' + this._id;
 });
 
 
-module.exports = mongoose.model('SelfCare', SelfCareSchema);
+module.exports = mongoose.model('HomeCareTip', HomeCareTipSchema);

@@ -26,12 +26,49 @@ exports.food_detail = function(req, res, next) {
 };
 
 exports.food_create_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: food create GET');
+    res.render('food_form', { title: 'Create Food' });
 };
 
 
-exports.food_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: food create POST');
+exports.food_create_post = function(req, res, next) {
+  req.checkBody('name', 'Food name required').notEmpty(); 
+  req.checkBody('type', 'Food type required').notEmpty();
+  req.checkBody('preparation', 'Food preparation required').notEmpty();
+  req.sanitize('name').escape();
+  req.sanitize('name').trim();
+  req.sanitize('type').escape();
+  req.sanitize('type').trim();  
+  req.sanitize('preparation').escape();
+  req.sanitize('preparation').trim();
+
+  var errors = req.validationErrors();
+
+  var food = new Food(
+    { name: req.body.name,
+      type: req.body.type,
+      preparation: req.body.preparation
+    });
+  if (errors) {
+      res.render('food_form', { title: 'Create Food', food: food, errors: errors});
+  return;
+  } 
+  else {
+      Food.findOne({ 'name': req.body.name })
+          .exec( function(err, found_food) {
+               console.log('found_food: ' + found_food);
+               if (err) { return next(err); }
+               if (found_food) { 
+                   res.redirect(found_food.url);
+               }
+               else {
+                   
+                   food.save(function (err) {
+                     if (err) { return next(err); }
+                     res.redirect(food.url);
+                   });                 
+               }               
+           });
+  }
 };
 
 exports.food_delete_get = function(req, res) {

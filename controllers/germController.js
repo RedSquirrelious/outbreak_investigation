@@ -1,6 +1,6 @@
 var Germ = require('../models/germ');
 var PreventionTip = require('../models/prevention_tip');
-var SelfCare = require('../models/self_care');
+var HomeCareTip = require('../models/home_care_tip');
 var Symptom = require('../models/symptom');
 var async = require('async');
 
@@ -20,7 +20,7 @@ exports.germ_detail = function(req, res) {
     germ: function(callback) {
       Germ.findById(req.params.id)
       .populate('symptoms')
-      .populate('self_care')
+      .populate('care')
       .populate('prevention')
       .exec(callback);
     }

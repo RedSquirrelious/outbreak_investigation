@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Food:
+      input#name.form-control(type='text', placeholder='Chicken, Alfalfa Sprouts etc.' name='name' value=(undefined===food ? '' : food.name))
+
+      label(for='type') Food:
+      input#type.form-control(type='text', placeholder='Poultry, Vegetables etc.' type='type' value=(undefined===food ? '' : food.type))
+
+      label(for='preparation') Food:
+      input#preparation.form-control(type='text', placeholder='Cooked or Raw.' preparation='preparation' value=(undefined===food ? '' : food.preparation))
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

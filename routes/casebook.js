@@ -8,7 +8,7 @@ var lab_controller = require('../controllers/labController');
 var medical_facility_controller = require('../controllers/medicalFacilityController');
 var patient_controller = require('../controllers/patientController');
 var prevention_tip_controller = require('../controllers/preventionTipController');
-var self_care_controller = require('../controllers/selfCareController');
+var home_care_tip_controller = require('../controllers/homeCareTipController');
 var symptom_controller = require('../controllers/symptomController');
 var vendor_controller = require('../controllers/vendorController');
 
@@ -105,18 +105,18 @@ router.post('/prevention_tip/:id/update', prevention_tip_controller.prevention_t
 router.get('/prevention_tip/:id', prevention_tip_controller.prevention_tip_detail);
 router.get('/prevention_tips', prevention_tip_controller.prevention_tip_list);
 
-//self-care recommendations
-router.get('/recommendation/create', self_care_controller.self_care_create_get);
-router.post('/recommendation/create', self_care_controller.self_care_create_post);
+//home care recommendations
+router.get('/home_care_tip/create', home_care_tip_controller.home_care_tip_create_get);
+router.post('/home_care_tip/create', home_care_tip_controller.home_care_tip_create_post);
 
-router.get('/recommendation/:id/delete', self_care_controller.self_care_delete_get);
-router.post('/recommendation/:id/delete', self_care_controller.self_care_delete_post);
+router.get('/home_care_tip/:id/delete', home_care_tip_controller.home_care_tip_delete_get);
+router.post('/home_care_tip/:id/delete', home_care_tip_controller.home_care_tip_delete_post);
 
-router.get('/recommendation/:id/update', self_care_controller.self_care_update_get);
-router.post('/recommendation/:id/update', self_care_controller.self_care_update_post);
+router.get('/home_care_tip/:id/update', home_care_tip_controller.home_care_tip_update_get);
+router.post('/home_care_tip/:id/update', home_care_tip_controller.home_care_tip_update_post);
 
-router.get('/recommendation/:id', self_care_controller.self_care_detail);
-router.get('/recommendations', self_care_controller.self_care_list);
+router.get('/home_care_tip/:id', home_care_tip_controller.home_care_tip_detail);
+router.get('/home_care_tips', home_care_tip_controller.home_care_tip_list);
 
 //symptoms
 router.get('/symptom/create', symptom_controller.symptom_create_get);

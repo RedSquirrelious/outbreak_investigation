@@ -32,13 +32,6 @@ VendorSchema
   return this.poc_first_name + ' ' + this.poc_family_name;
 });
 
-// VendorSchema
-// .virtual('phone')
-// .get(function() {
-//   var num = this.work_phone.toString();
-//   var formatted_number = num.substr(0, 3) + '-' + num.substr(3, 3) + '-' + num.substr(6, 4);
-//   return formatted_number;
-// });
 
 VendorSchema
 .virtual('phone')

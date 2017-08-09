@@ -10,7 +10,7 @@ var GermSchema = Schema(
   incubation_period: {type: String},
   symptoms: [{type: Schema.ObjectId, ref: 'Symptom'}],
   duration: {type: String},
-  self_care: [{type: Schema.ObjectId, ref: 'SelfCare'}],
+  care: [{type: Schema.ObjectId, ref: 'HomeCareTip'}],
   prevention: [{type: Schema.ObjectId, ref: 'PreventionTip'}]
 });
 

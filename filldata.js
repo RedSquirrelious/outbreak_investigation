@@ -17,7 +17,7 @@ var Lab = require('./models/lab')
 var MedicalFacility = require('./models/medical_facility')
 var Patient = require('./models/patient')
 var PreventionTip = require('./models/prevention_tip')
-var SelfCare = require('./models/self_care')
+var HomeCareTip = require('./models/home_care_tip')
 var Symptom = require('./models/symptom')
 var Vendor = require('./models/vendor')
 
@@ -50,7 +50,7 @@ var labs = []
 var medical_facilities = []
 var patients = []
 var prevention_tips = []
-var self_care_recs = []
+var home_care_tips = []
 var symptoms = []
 var vendors = []
 
@@ -75,14 +75,14 @@ function foodCreate(name, type, prep, cb) {
   }  );
 }
 
-function germCreate(full_name, short_name, sources, incubation, symptoms, duration, self_care, prevention, cb) {
+function germCreate(full_name, short_name, sources, incubation, symptoms, duration, care, prevention, cb) {
   germ_detail = { 
     full_name: full_name,
     sources: sources,
     incubation_period: incubation,
     symptoms: symptoms,
     duration: duration,
-    self_care: self_care,
+    care: care,
     prevention: prevention
   }
 
@@ -188,16 +188,16 @@ function preventionTipCreate(recommendation, cb) {
   });
 }
 
-function selfCareRecCreate(recommendation, cb) {
-  var rec = new SelfCare({recommendation: recommendation});
-  rec.save(function(err) {
+function homeCareTipCreate(recommendation, cb) {
+  var tip = new HomeCareTip({recommendation: recommendation});
+  tip.save(function(err) {
     if (err) {
       cb(err, null)
       return
     }
-    console.log('New Self Care Recommendation: ' + rec);
-    self_care_recs.push(rec)
-    cb(null, rec)
+    console.log('New Home Care Tip: ' + tip);
+    home_care_tips.push(tip)
+    cb(null, tip)
   });
 }
 
@@ -324,35 +324,35 @@ function createFoods(cb) {
         cb);
 }
 
-function createSelfCareRecs(cb) {
+function createHomeCareTips(cb) {
   async.series([
     function(callback) {
-      selfCareRecCreate('Drink plenty of fluids and get rest.', callback);
+      homeCareTipCreate('Drink plenty of fluids and get rest.', callback);
     },
     function(callback) {
-      selfCareRecCreate('If you cannot drink enough fluids to prevent dehydration, call your doctor.', callback);
+      homeCareTipCreate('If you cannot drink enough fluids to prevent dehydration, call your doctor.', callback);
     },
     function(callback) {
-      selfCareRecCreate('Antibiotics may be necessary if the infection spreads from the intestines to the blood stream.', callback);
+      homeCareTipCreate('Antibiotics may be necessary if the infection spreads from the intestines to the blood stream.', callback);
     },
     function(callback) {
-      selfCareRecCreate('In more severe cases, certain antibiotics can be used and can shorten the duration of symptoms if given early in the illness.', callback);
+      homeCareTipCreate('In more severe cases, certain antibiotics can be used and can shorten the duration of symptoms if given early in the illness.', callback);
     },
 
     function(callback) {
-      selfCareRecCreate('If you cannot drink enough fluids to prevent dehydration or if your symptoms are severe (including blood in your stools or severe abdominal pain), call your doctor.', callback);
+      homeCareTipCreate('If you cannot drink enough fluids to prevent dehydration or if your symptoms are severe (including blood in your stools or severe abdominal pain), call your doctor.', callback);
     },
     function(callback) {
-      selfCareRecCreate('Antibiotics should not be used to treat this infection.', callback);
+      homeCareTipCreate('Antibiotics should not be used to treat this infection.', callback);
     },   
     function(callback) {
-      selfCareRecCreate('If you are very ill with fever or stiff neck, consult your doctor immediately.', callback);
+      homeCareTipCreate('If you are very ill with fever or stiff neck, consult your doctor immediately.', callback);
     },  
     function(callback) {
-      selfCareRecCreate('Antibiotics given promptly can cure the infection and, in pregnant women, can prevent infection of the fetus.', callback);
+      homeCareTipCreate('Antibiotics given promptly can cure the infection and, in pregnant women, can prevent infection of the fetus.', callback);
     },
     function(callback) {
-      selfCareRecCreate('If you develop severe illness within a few days after eating raw or undercooked shellfish or after being exposed to warm coastal water, contact your doctor.', callback);
+      homeCareTipCreate('If you develop severe illness within a few days after eating raw or undercooked shellfish or after being exposed to warm coastal water, contact your doctor.', callback);
     }
 
     ], cb);
@@ -489,28 +489,28 @@ function createPreventionTips(cb) {
 function createGerms(cb) {
     async.parallel([
         function(callback) {
-          germCreate('Salmonella', false, 'Food: Contaminated eggs, poultry, meat, unpasteurized milk or juice, cheese, contaminated raw fruits and vegetables (alfalfa sprouts, melons), spices, and nuts, Animals and their environment: Particularly reptiles (snakes, turtles, lizards), amphibians (frogs), birds (baby chicks) and pet food and treats.', '12-72 hours', [symptoms[0]], '4-7 days', [self_care_recs[0], self_care_recs[1], self_care_recs[2]], [prevention_tips[2], prevention_tips[3], prevention_tips[4], prevention_tips[5], prevention_tips[6], prevention_tips[7], prevention_tips[8]], callback)
+          germCreate('Salmonella', false, 'Food: Contaminated eggs, poultry, meat, unpasteurized milk or juice, cheese, contaminated raw fruits and vegetables (alfalfa sprouts, melons), spices, and nuts, Animals and their environment: Particularly reptiles (snakes, turtles, lizards), amphibians (frogs), birds (baby chicks) and pet food and treats.', '12-72 hours', [symptoms[0]], '4-7 days', [home_care_tips[0], home_care_tips[1], home_care_tips[2]], [prevention_tips[2], prevention_tips[3], prevention_tips[4], prevention_tips[5], prevention_tips[6], prevention_tips[7], prevention_tips[8]], callback)
         },
         function(callback) {
-          germCreate('Norovirus', 'norwalk virus', 'Produce, shellfish, ready-to-eat foods touched by infected food workers (salads, sandwiches, ice, cookies, fruit), or any other foods contaminated with vomit or feces from an infected person', '12-48 hours', [symptoms[0],symptoms[1]], '1-3 days', [self_care_recs[0], self_care_recs[1]], [prevention_tips[9], prevention_tips[10], prevention_tips[11], prevention_tips[12], prevention_tips[13], prevention_tips[14]], callback)
+          germCreate('Norovirus', 'norwalk virus', 'Produce, shellfish, ready-to-eat foods touched by infected food workers (salads, sandwiches, ice, cookies, fruit), or any other foods contaminated with vomit or feces from an infected person', '12-48 hours', [symptoms[0],symptoms[1]], '1-3 days', [home_care_tips[0], home_care_tips[1]], [prevention_tips[9], prevention_tips[10], prevention_tips[11], prevention_tips[12], prevention_tips[13], prevention_tips[14]], callback)
         },
         function(callback) {
-          germCreate('Campylobacter', false, 'Raw and undercooked poultry, unpasteurized milk, contaminated water.', '2-5 days', [symptoms[2]], '', [self_care_recs[0], self_care_recs[1], self_care_recs[3]], [prevention_tips[16], prevention_tips[17], prevention_tips[18]], callback)
+          germCreate('Campylobacter', false, 'Raw and undercooked poultry, unpasteurized milk, contaminated water.', '2-5 days', [symptoms[2]], '', [home_care_tips[0], home_care_tips[1], home_care_tips[3]], [prevention_tips[16], prevention_tips[17], prevention_tips[18]], callback)
         },
         function(callback) {
-          germCreate('Escherichia coli', 'E. coli', 'Contaminated food, especially undercooked ground beef, unpasteurized (raw) milk and juice, soft cheeses made from raw milk, and raw fruits and vegetables (such as sprouts).Contaminated water, including drinking untreated water and swimming in contaminated water. Animals and their environment: particularly cows, sheep, and goats. If you don’t wash your hands carefully after touching an animal or its environment, you could get an E. coli infection. Feces of infected people.', '1-10 days', [symptoms[3], symptoms[4]], '5-10 days', [self_care_recs[0], self_care_recs[4], self_care_recs[5]], [prevention_tips[18], prevention_tips[19], prevention_tips[20]], callback)
+          germCreate('Escherichia coli', 'E. coli', 'Contaminated food, especially undercooked ground beef, unpasteurized (raw) milk and juice, soft cheeses made from raw milk, and raw fruits and vegetables (such as sprouts).Contaminated water, including drinking untreated water and swimming in contaminated water. Animals and their environment: particularly cows, sheep, and goats. If you don’t wash your hands carefully after touching an animal or its environment, you could get an E. coli infection. Feces of infected people.', '1-10 days', [symptoms[3], symptoms[4]], '5-10 days', [home_care_tips[0], home_care_tips[4], home_care_tips[5]], [prevention_tips[18], prevention_tips[19], prevention_tips[20]], callback)
         },  
         function(callback) {
-          germCreate('Listeria', false, 'Ready-to-eat deli meats and hot dogs. Refrigerated pâtés or meat spreads. Unpasteurized (raw) milk and dairy products. Soft cheese made with unpasteurized milk, such as queso fresco, Feta, Brie, Camembert. Refrigerated smoked seafood. Raw sprouts', '3-70 days', [symptoms[5]], 'Days to weeks', [self_care_recs[6], self_care_recs[7]], [prevention_tips[4], prevention_tips[5], prevention_tips[6], prevention_tips[22], prevention_tips[23], prevention_tips[24], prevention_tips[25], prevention_tips[26]], callback)
+          germCreate('Listeria', false, 'Ready-to-eat deli meats and hot dogs. Refrigerated pâtés or meat spreads. Unpasteurized (raw) milk and dairy products. Soft cheese made with unpasteurized milk, such as queso fresco, Feta, Brie, Camembert. Refrigerated smoked seafood. Raw sprouts', '3-70 days', [symptoms[5]], 'Days to weeks', [home_care_tips[6], home_care_tips[7]], [prevention_tips[4], prevention_tips[5], prevention_tips[6], prevention_tips[22], prevention_tips[23], prevention_tips[24], prevention_tips[25], prevention_tips[26]], callback)
         }, 
         function(callback) {
-          germCreate('Clostridium perfringens', 'C. perfringens', 'Beef, poultry, gravies.', '6-24 hours', [symptoms[6]], '24 hours or less', [self_care_recs[0], self_care_recs[1]], [prevention_tips[6], prevention_tips[15], prevention_tips[26], prevention_tips[27], prevention_tips[27], prevention_tips[28]], callback)
+          germCreate('Clostridium perfringens', 'C. perfringens', 'Beef, poultry, gravies.', '6-24 hours', [symptoms[6]], '24 hours or less', [home_care_tips[0], home_care_tips[1]], [prevention_tips[6], prevention_tips[15], prevention_tips[26], prevention_tips[27], prevention_tips[27], prevention_tips[28]], callback)
         },  
       function(callback) {
-          germCreate('Bacillus cereus', 'B. cereus', 'A variety of foods, particularly rice and leftovers, as well as sauces, soups, and other prepared foods that have sat out too long at room temperature.', 'Diarrheal: 6-15 hours, Emetic (vomiting): 30 minutes to 6 hours', [symptoms[0]], '24 hours', [self_care_recs[0], self_care_recs[1]], [prevention_tips[0], prevention_tips[1]], callback)
+          germCreate('Bacillus cereus', 'B. cereus', 'A variety of foods, particularly rice and leftovers, as well as sauces, soups, and other prepared foods that have sat out too long at room temperature.', 'Diarrheal: 6-15 hours, Emetic (vomiting): 30 minutes to 6 hours', [symptoms[0]], '24 hours', [home_care_tips[0], home_care_tips[1]], [prevention_tips[0], prevention_tips[1]], callback)
         },  
       function(callback) {
-          germCreate('Vibrio vulnificus', 'V. vulnificus', 'Raw or undercooked shellfish, particularly raw oysters', '1-7 days', [symptoms[7]], '2-8 days', [self_care_recs[8]], [prevention_tips[29]], callback)
+          germCreate('Vibrio vulnificus', 'V. vulnificus', 'Raw or undercooked shellfish, particularly raw oysters', '1-7 days', [symptoms[7]], '2-8 days', [home_care_tips[8]], [prevention_tips[29]], callback)
         }   
         ], cb);
 }
@@ -533,14 +533,14 @@ function createCases(cb) {
 
 
 async.series([
-    createFoods,
+  createFoods,
   createVendors,
   createPatients,
-    createLabs,
+  createLabs,
   createMedicalFacilities,
   createSymptoms,
   createPreventionTips,
-  createSelfCareRecs,
+  createHomeCareTips,
   createGerms
   // createCases
 ],
