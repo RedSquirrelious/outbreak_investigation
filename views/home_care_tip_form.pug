@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='recommendation') Home Care Tip:
+      input#care_recommendation.form-control(type='text', placeholder='Drink fluids, get rest, etc.' recommendation='recommendation' value=(undefined===care ? '' : care.name))
+    button.btn.btn-primary(type='submit') Submit
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

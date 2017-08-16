@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Vendor Name:
+      input#vendor_name.form-control(type='text', placeholder='QFC, XYZ Cafe, etc.' name='name' value=(undefined===vendor ? '' : vendor.name))
+
+      label(for='vendor_type') Vendor Type:
+      input#vendor_vendor_type.form-control(type='text', placeholder='Market, Restaurant, etc.' vendor_type='vendor_type' value=(undefined===vendor ? '' : vendor.vendor_type))
+
+      label(for='street_address') Street_address:
+      input#vendor_street_address.form-control(type='text', placeholder='1234 Main Street, etc.' street_address='street_address' value=(undefined===vendor ? '' : vendor.street_address))
+
+      label(for='city') City:
+      input#vendor_city.form-control(type='text', placeholder='Seattle' city='city' value=(undefined===vendor ? '' : vendor.city))
+
+      label(for='state') State:
+      input#vendor_state.form-control(type='text', placeholder='State' state='state' value=(undefined===vendor ? '' : vendor.state))
+
+      label(for='zip') Zip Code:
+      input#vendor_zip.form-control(type='text' placeholder='Zip Code' zip='zip' value=(undefined===vendor ? '' : vendor.zip))
+
+      label(for='poc_first_name') Point of Contact First Name:
+      input#vendor_poc_first_name.form-control(type='text', placeholder='Jane' poc_first_name='poc_first_name' value=(undefined===vendor ? '' : vendor.poc_first_name))
+
+      label(for='poc_family_name') Point of Contact Family Name:
+      input#vendor_poc_family_name.form-control(type='text', placeholder='Public' poc_family_name='poc_family_name' value=(undefined===vendor ? '' : vendor.poc_family_name))
+
+      label(for='work_phone') Work_phone:
+      input#vendor_work_phone.form-control(type='text', placeholder='206-234-5678' work_phone='work_phone' value=(undefined===vendor ? '' : vendor.work_phone))
+
+      label(for='cell_phone') Cell_phone:
+      input#vendor_cell_phone.form-control(type='text', placeholder='206-876-5432' cell_phone='cell_phone' value=(undefined===vendor ? '' : vendor.cell_phone))     
+
+      label(for='email') Email:
+      input#vendor_email.form-control(type='text', placeholder='janeqpublic@somewhere.com' email='email' value=(undefined===vendor ? '' : vendor.email))
+
+    button.btn.btn-primary(type='submit') Submit
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

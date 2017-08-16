@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Lab Name:
+      input#lab_name.form-control(type='text', placeholder='Public Health Lab, etc.' name='name' value=(undefined===lab ? '' : lab.name))
+
+      label(for='street_address') Street_address:
+      input#lab_street_address.form-control(type='text', placeholder='1234 Main Street, etc.' street_address='street_address' value=(undefined===lab ? '' : lab.street_address))
+
+      label(for='city') City:
+      input#lab_city.form-control(type='text', placeholder='Seattle' city='city' value=(undefined===lab ? '' : lab.city))
+
+      label(for='state') State:
+      input#lab_state.form-control(type='text', placeholder='State' state='state' value=(undefined===lab ? '' : lab.state))
+
+      label(for='zip') Zip Code:
+      input#lab_zip.form-control(type='text' placeholder='Zip Code' zip='zip' value=(undefined===lab ? '' : lab.zip))
+
+
+      label(for='work_phone') Work_phone:
+      input#lab_work_phone.form-control(type='text', placeholder='206-234-5678' work_phone='work_phone' value=(undefined===lab ? '' : lab.work_phone))
+
+    button.btn.btn-primary(type='submit') Submit
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

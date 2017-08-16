@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Lab Name:
+      input#facility_name.form-control(type='text', placeholder='Swedish Medical Center' name='name' value=(undefined==facility ? '' : facility.name))
+
+      label(for='street_address') Street_address:
+      input#facility_street_address.form-control(type='text', placeholder='1234 Main Street, etc.' street_address='street_address' value=(undefined==facility ? '' : facility.street_address))
+
+      label(for='city') City:
+      input#facility_city.form-control(type='text', placeholder='Seattle' city='city' value=(undefined==facility ? '' : facility.city))
+
+      label(for='state') State:
+      input#facility_state.form-control(type='text', placeholder='State' state='state' value=(undefined==facility ? '' : facility.state))
+
+      label(for='zip') Zip Code:
+      input#facility_zip.form-control(type='text' placeholder='Zip Code' zip='zip' value=(undefined==facility ? '' : facility.zip))
+
+
+      label(for='work_phone') Work_phone:
+      input#facility_work_phone.form-control(type='text', placeholder='206-234-5678' work_phone='work_phone' value=(undefined==facility ? '' : facility.work_phone))
+
+    button.btn.btn-primary(type='submit') Submit
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
