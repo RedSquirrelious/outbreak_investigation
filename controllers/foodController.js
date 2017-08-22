@@ -65,11 +65,11 @@ exports.food_create_post = function(req, res, next) {
                else {
                    console.log('in the else block');
                    food.save(function (err) {
-                     if (err) { 
-                      console.log(err);
-                      console.log(food);
-                      return next(err);
-                    }
+                    //  if (err) { 
+                    //   console.log(err);
+                    //   console.log(food);
+                    //   return next(err);
+                    // }
                      res.redirect(food.url);
                    });                 
                }               
