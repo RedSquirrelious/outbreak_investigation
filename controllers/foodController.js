@@ -32,12 +32,12 @@ exports.food_create_get = function(req, res) {
 
 exports.food_create_post = function(req, res, next) {
   req.checkBody('name', 'Food name required').notEmpty(); 
-  req.checkBody('type', 'Food type required').notEmpty();
+  req.checkBody('category', 'Food category required').notEmpty();
   req.checkBody('preparation', 'Food preparation required').notEmpty();
   req.sanitize('name').escape();
   req.sanitize('name').trim();
-  req.sanitize('type').escape();
-  req.sanitize('type').trim();  
+  req.sanitize('category').escape();
+  req.sanitize('category').trim();
   req.sanitize('preparation').escape();
   req.sanitize('preparation').trim();
 
@@ -45,7 +45,7 @@ exports.food_create_post = function(req, res, next) {
 
   var food = new Food(
     { name: req.body.name,
-      type: req.body.type,
+      category: req.body.category,
       preparation: req.body.preparation
     });
   if (errors) {
@@ -56,14 +56,20 @@ exports.food_create_post = function(req, res, next) {
       Food.findOne({ 'name': req.body.name })
           .exec( function(err, found_food) {
                console.log('found_food: ' + found_food);
-               if (err) { return next(err); }
+               if (err) { 
+                return next(err); 
+               }
                if (found_food) { 
-                   res.redirect(found_food.url);
+                  res.redirect(found_food.url);
                }
                else {
-                   
+                   console.log('in the else block');
                    food.save(function (err) {
-                     if (err) { return next(err); }
+                     if (err) { 
+                      console.log(err);
+                      console.log(food);
+                      return next(err);
+                    }
                      res.redirect(food.url);
                    });                 
                }               

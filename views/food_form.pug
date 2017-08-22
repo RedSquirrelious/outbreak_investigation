@@ -6,14 +6,19 @@ block content
   form(method='POST' action='')
     div.form-group
       label(for='name') Food:
-      input#food_name.form-control(type='text', placeholder='Chicken, Alfalfa Sprouts etc.' name='name' value=(undefined===food ? '' : food.name))
+      input#food_name.form-control(type='text', placeholder='Chicken, Alfalfa Sprouts, etc.' name='name' value=(undefined===food ? '' : food.name))
 
+    div.form-group
       label(for='category') Category:
-      input#food_category.form-control(type='text', placeholder='Poultry, Vegetables etc.' category='category' value=(undefined===food ? '' : food.category))
+      input#food_category.form-control(type='text', placeholder='Poultry, Vegetables, etc.' name='category' value=(undefined===food ? '' : food.category))
 
+    div.form-group
       label(for='preparation') Preparation:
-      input#food_preparation.form-control(type='text', placeholder='Cooked or Raw.' preparation='preparation' value=(undefined===food ? '' : food.preparation))
-    button.btn.btn-primary(type='submit') Submit
+      input#food_preparation.form-control(type='text', placeholder='Cooked, Raw, etc.' name='preparation' value=(undefined===food ? '' : food.preparation))
+
+    div.form-group
+      button.btn.btn-primary(type='submit') Submit
+
   if errors 
     ul
       for error in errors
